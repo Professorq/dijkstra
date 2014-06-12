@@ -3,6 +3,7 @@ package dijkstra
 
 import(
     "bufio"
+    // "container/heap"
     "log"
     "os"
     "strconv"
@@ -19,6 +20,11 @@ type Graph struct {
     vertices map[int]bool
     edges []Edge
 }
+
+type Untouched map[int]int
+func (h Untouched)  Len() int           { return len(h) }
+func (h Untouched)  Less(i, j int) bool { return h[i] < h[j] }
+func (h Untouched)  Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
 
 func NewGraph(e []Edge) *Graph {
     g := new(Graph)
@@ -74,4 +80,8 @@ func EdgeListFromFile(fn string) (e []Edge) {
 }
 
 func (g *Graph) Len() int { return len(g.vertices)  }
+
+func (g *Graph) ShortestPath(src, dest int) (l int) {
+    return
+}
 
