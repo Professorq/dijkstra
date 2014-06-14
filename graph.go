@@ -21,10 +21,22 @@ type Graph struct {
     edges []Edge
 }
 
-type Untouched map[int]int
-func (h Untouched)  Len() int           { return len(h) }
-func (h Untouched)  Less(i, j int) bool { return h[i] < h[j] }
-func (h Untouched)  Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+type Vertex struct {
+    id int
+    est int
+}
+
+type Candidates []Vertex
+func (h Candidates)  Len() int           { return len(h) }
+func (h Candidates)  Less(i, j int) bool { return h[i].est < h[j].est }
+func (h Candidates)  Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *Candidates) Push(v Vertex) {
+}
+
+func (h *Candidates) Pop() (v Vertex) {
+    return
+}
 
 func NewGraph(e []Edge) *Graph {
     g := new(Graph)
