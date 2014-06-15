@@ -36,7 +36,11 @@ func (h *Candidates) Push(v Vertex) {
     for i, w := range old {
         if v.id == w.id {
             if changed {
-                updated = append(updated[:i], updated[i+1:]...)
+                if i + 1 < len(updated) {
+                    updated = append(updated[:i], updated[i+1:]...)
+                } else {
+                    updated = updated[:i]
+                }
             } else if v.dist < w.dist {
                 updated[i] = v
             }
@@ -66,10 +70,14 @@ type Graph struct {
     vertices map[int]Vertex
 }
 
-func NewGraph(v map[int]Vertex) *Graph {
+func NewGraph(vs map[int]Vertex) *Graph {
     g := new(Graph)
     g.visited = make(map[int]bool)
-    g.vertices = v
+    g.vertices = make(map[int]Vertex)
+    for i, v := range vs {
+        v.dist = 1000000
+        g.vertices[i] = v
+    }
     return g
 }
 

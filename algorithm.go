@@ -1,7 +1,6 @@
 
 package dijkstra
 
-
 func (g *Graph) ShortestPath(src, dest int) (x int) {
     g.visit(src)
     v := g.vertices[src]
@@ -9,13 +8,20 @@ func (g *Graph) ShortestPath(src, dest int) (x int) {
     // initialize the heap with out edges from src
     for id, y := range v.arcs {
         v := g.vertices[id]
+        // update the vertices being pointed to with the distance.
         v.dist = y
         g.vertices[id] = v
         h.Push(v)
     }
     for src != dest {
+        if h.IsEmpty() {
+            return 1000000
+        }
         v = h.Pop()
         src = v.id
+        if g.visited[src] {
+            continue
+        }
         g.visit(src)
         for w, d := range v.arcs {
             if g.visited[w] {
